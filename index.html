@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Mark Sheet Processing System</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    margin: 0;
+    background: #f2f6fc;
+    color: #222;
+}
+
+header {
+    background: #1565c0;
+    color: white;
+    text-align: center;
+    padding: 25px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 30px;
+}
+
+header p {
+    margin: 8px 0 0;
+}
+
+.container {
+    width: 90%;
+    max-width: 1000px;
+    margin: 30px auto;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    margin-bottom: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+h2 {
+    color: #1565c0;
+    margin-top: 0;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+}
+
+.full {
+    grid-column: span 2;
+}
+
+label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 7px;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #bbb;
+    border-radius: 6px;
+    font-size: 15px;
+}
+
+button {
+    background: #1565c0;
+    color: white;
+    border: none;
+    padding: 13px 25px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background: #0d47a1;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: center;
+}
+
+th {
+    background: #1565c0;
+    color: white;
+}
+
+.result {
+    display: none;
+}
+
+.summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.box {
+    background: #e3f2fd;
+    padding: 18px;
+    text-align: center;
+    border-radius: 8px;
+}
+
+.box h3 {
+    margin: 0 0 8px;
+    color: #1565c0;
+}
+
+.box p {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.performance {
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 8px;
+    background: #e8f5e9;
+    border-left: 5px solid #2e7d32;
+}
+
+footer {
+    background: #1565c0;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    margin-top: 40px;
+}
+
+@media(max-width:700px) {
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .full {
+        grid-column: span 1;
+    }
+
+    .summary {
+        grid-template-columns: 1fr;
+    }
+
+    table {
+        font-size: 13px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<h1>📊 Mark Sheet Processing System</h1>
+
+<p>Cloud-Based SaaS Application</p>
+
+</header>
+
+
+<div class="container">
+
+<!-- STUDENT DETAILS -->
+
+<div class="card">
+
+<h2>👨‍🎓 Student Information</h2>
+
+<div class="form-grid">
+
+<div>
+
+<label>Student Name</label>
+
+<input type="text"
+id="studentName"
+placeholder="Enter student name">
+
+</div>
+
+
+<div>
+
+<label>Register Number</label>
+
+<input type="text"
+id="regNo"
+placeholder="Enter register number">
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- MARK ENTRY -->
+
+<div class="card">
+
+<h2>📝 Enter Subject Marks</h2>
+
+<table>
+
+<tr>
+
+<th>Subject</th>
+
+<th>Maximum Marks</th>
+
+<th>Marks Obtained</th>
+
+</tr>
+
+
+<tr>
+
+<td>Mathematics</td>
+
+<td>100</td>
+
+<td>
+<input type="number"
+id="math"
+min="0"
+max="100"
+placeholder="0-100">
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>Computer Science</td>
+
+<td>100</td>
+
+<td>
+<input type="number"
+id="cs"
+min="0"
+max="100"
+placeholder="0-100">
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>Database Management</td>
+
+<td>100</td>
+
+<td>
+<input type="number"
+id="dbms"
+min="0"
+max="100"
+placeholder="0-100">
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>Computer Networks</td>
+
+<td>100</td>
+
+<td>
+<input type="number"
+id="cn"
+min="0"
+max="100"
+placeholder="0-100">
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>Operating Systems</td>
+
+<td>100</td>
+
+<td>
+<input type="number"
+id="os"
+min="0"
+max="100"
+placeholder="0-100">
+</td>
+
+</tr>
+
+</table>
+
+
+<br>
+
+<button onclick="processMarks()">
+⚙️ Process Mark Sheet
+</button>
+
+</div>
+
+
+<!-- RESULT -->
+
+<div class="card result" id="result">
+
+<h2>📄 Student Mark Sheet</h2>
+
+
+<p>
+<b>Student Name:</b>
+<span id="resultName"></span>
+</p>
+
+
+<p>
+<b>Register Number:</b>
+<span id="resultReg"></span>
+</p>
+
+
+<table>
+
+<tr>
+
+<th>Subject</th>
+
+<th>Marks</th>
+
+<th>Grade</th>
+
+<th>Status</th>
+
+</tr>
+
+
+<tr>
+
+<td>Mathematics</td>
+
+<td id="rMath"></td>
+
+<td id="gMath"></td>
+
+<td id="sMath"></td>
+
+</tr>
+
+
+<tr>
+
+<td>Computer Science</td>
+
+<td id="rCS"></td>
+
+<td id="gCS"></td>
+
+<td id="sCS"></td>
+
+</tr>
+
+
+<tr>
+
+<td>Database Management</td>
+
+<td id="rDBMS"></td>
+
+<td id="gDBMS"></td>
+
+<td id="sDBMS"></td>
+
+</tr>
+
+
+<tr>
+
+<td>Computer Networks</td>
+
+<td id="rCN"></td>
+
+<td id="gCN"></td>
+
+<td id="sCN"></td>
+
+</tr>
+
+
+<tr>
+
+<td>Operating Systems</td>
+
+<td id="rOS"></td>
+
+<td id="gOS"></td>
+
+<td id="sOS"></td>
+
+</tr>
+
+</table>
+
+
+<!-- SUMMARY -->
+
+<div class="summary">
+
+<div class="box">
+
+<h3>Total Marks</h3>
+
+<p id="total"></p>
+
+</div>
+
+
+<div class="box">
+
+<h3>Average</h3>
+
+<p id="average"></p>
+
+</div>
+
+
+<div class="box">
+
+<h3>Percentage</h3>
+
+<p id="percentage"></p>
+
+</div>
+
+
+<div class="box">
+
+<h3>Rank</h3>
+
+<p id="rank"></p>
+
+</div>
+
+
+<div class="box">
+
+<h3>Result</h3>
+
+<p id="overallResult"></p>
+
+</div>
+
+
+<div class="box">
+
+<h3>Grade</h3>
+
+<p id="overallGrade"></p>
+
+</div>
+
+</div>
+
+
+<!-- PERFORMANCE -->
+
+<div class="performance">
+
+<h3>🌟 Overall Performance</h3>
+
+<p id="performance"></p>
+
+</div>
+
+
+<br>
+
+<button onclick="window.print()">
+🖨 Print Mark Sheet
+</button>
+
+</div>
+
+</div>
+
+
+<footer>
+
+Mark Sheet Processing System | SaaS Cloud Application | GitHub Pages
+
+</footer>
+
+
+<script>
+
+function getGrade(mark) {
+
+    if(mark >= 90)
+        return "A+";
+
+    else if(mark >= 80)
+        return "A";
+
+    else if(mark >= 70)
+        return "B";
+
+    else if(mark >= 60)
+        return "C";
+
+    else if(mark >= 50)
+        return "D";
+
+    else
+        return "F";
+}
+
+
+function getStatus(mark) {
+
+    if(mark >= 40)
+        return "PASS";
+
+    else
+        return "FAIL";
+}
+
+
+function processMarks() {
+
+    let name =
+    document.getElementById("studentName").value;
+
+    let reg =
+    document.getElementById("regNo").value;
+
+
+    if(name === "" || reg === "") {
+
+        alert("Please enter Student Name and Register Number.");
+
+        return;
+    }
+
+
+    let math =
+    Number(document.getElementById("math").value);
+
+    let cs =
+    Number(document.getElementById("cs").value);
+
+    let dbms =
+    Number(document.getElementById("dbms").value);
+
+    let cn =
+    Number(document.getElementById("cn").value);
+
+    let os =
+    Number(document.getElementById("os").value);
+
+
+    let marks = [math, cs, dbms, cn, os];
+
+
+    for(let i = 0; i < marks.length; i++) {
+
+        if(marks[i] < 0 || marks[i] > 100) {
+
+            alert("Marks must be between 0 and 100.");
+
+            return;
+        }
+    }
+
+
+    let total =
+    math + cs + dbms + cn + os;
+
+
+    let average =
+    total / 5;
+
+
+    let percentage =
+    (total / 500) * 100;
+
+
+    let passed =
+    marks.every(mark => mark >= 40);
+
+
+    let grade;
+
+    if(!passed) {
+
+        grade = "F";
+
+    }
+
+    else if(percentage >= 90) {
+
+        grade = "A+";
+
+    }
+
+    else if(percentage >= 80) {
+
+        grade = "A";
+
+    }
+
+    else if(percentage >= 70) {
+
+        grade = "B";
+
+    }
+
+    else if(percentage >= 60) {
+
+        grade = "C";
+
+    }
+
+    else {
+
+        grade = "D";
+
+    }
+
+
+    let performance;
+
+    if(!passed) {
+
+        performance =
+        "Needs Improvement – Student has failed in one or more subjects.";
+
+    }
+
+    else if(percentage >= 90) {
+
+        performance =
+        "Outstanding Performance 🌟";
+
+    }
+
+    else if(percentage >= 80) {
+
+        performance =
+        "Excellent Performance 👏";
+
+    }
+
+    else if(percentage >= 70) {
+
+        performance =
+        "Very Good Performance 👍";
+
+    }
+
+    else if(percentage >= 60) {
+
+        performance =
+        "Good Performance 🙂";
+
+    }
+
+    else {
+
+        performance =
+        "Average Performance";
+
+    }
+
+
+    /*
+       Simple rank calculation
+       based on percentage.
+    */
+
+    let rank;
+
+    if(percentage >= 90)
+        rank = "1";
+
+    else if(percentage >= 80)
+        rank = "2";
+
+    else if(percentage >= 70)
+        rank = "3";
+
+    else if(percentage >= 60)
+        rank = "4";
+
+    else
+        rank = "5+";
+
+
+    document.getElementById("resultName")
+    .innerText = name;
+
+
+    document.getElementById("resultReg")
+    .innerText = reg;
+
+
+    document.getElementById("rMath")
+    .innerText = math;
+
+    document.getElementById("gMath")
+    .innerText = getGrade(math);
+
+    document.getElementById("sMath")
+    .innerText = getStatus(math);
+
+
+    document.getElementById("rCS")
+    .innerText = cs;
+
+    document.getElementById("gCS")
+    .innerText = getGrade(cs);
+
+    document.getElementById("sCS")
+    .innerText = getStatus(cs);
+
+
+    document.getElementById("rDBMS")
+    .innerText = dbms;
+
+    document.getElementById("gDBMS")
+    .innerText = getGrade(dbms);
+
+    document.getElementById("sDBMS")
+    .innerText = getStatus(dbms);
+
+
+    document.getElementById("rCN")
+    .innerText = cn;
+
+    document.getElementById("gCN")
+    .innerText = getGrade(cn);
+
+    document.getElementById("sCN")
+    .innerText = getStatus(cn);
+
+
+    document.getElementById("rOS")
+    .innerText = os;
+
+    document.getElementById("gOS")
+    .innerText = getGrade(os);
+
+    document.getElementById("sOS")
+    .innerText = getStatus(os);
+
+
+    document.getElementById("total")
+    .innerText = total + " / 500";
+
+
+    document.getElementById("average")
+    .innerText = average.toFixed(2);
+
+
+    document.getElementById("percentage")
+    .innerText = percentage.toFixed(2) + "%";
+
+
+    document.getElementById("rank")
+    .innerText = rank;
+
+
+    document.getElementById("overallResult")
+    .innerText =
+    passed ? "PASS" : "FAIL";
+
+
+    document.getElementById("overallGrade")
+    .innerText = grade;
+
+
+    document.getElementById("performance")
+    .innerText = performance;
+
+
+    document.getElementById("result")
+    .style.display = "block";
+
+
+    window.scrollTo({
+
+        top:
+        document.getElementById("result").offsetTop,
+
+        behavior: "smooth"
+
+    });
+
+}
+
+</script>
+
+</body>
+</html>
